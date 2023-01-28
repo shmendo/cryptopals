@@ -104,7 +104,7 @@ std::string Base64::decode(std::string ciphertext) {
         std::size_t b3 = char_table.find(ciphertext[i+2]);
         std::size_t b4 = char_table.find(ciphertext[i+3]);
 
-        // drop padding
+        // padding should be all 0s
         if (b3 == 64) b3 = 0;
         if (b4 == 64) b4 = 0;
 
@@ -115,7 +115,7 @@ std::string Base64::decode(std::string ciphertext) {
         c3 = (b3 << 6) | b4;
 
         plaintext.push_back(char(c1));
-        // drop padding
+        // drop padding bytes, as they're not required
         if (b3 != 0) plaintext.push_back(char(c2));
         if (b4 != 0) plaintext.push_back(char(c3));
     }
